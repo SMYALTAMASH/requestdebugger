@@ -43,6 +43,22 @@ curl "http://127.0.0.1:5464/?size=8192&firstkey=firstvalue%40123" -H 'Header1: v
 ## Check the Logs
 ```
 tail -f /tmp/requestHeadersQueryParamsAndBody.log
+
+# OUTPUT:
+###################################################################
+HTTP Method:  POST
+REQUEST URL:  /
+BODY:         {"dataKey":"dataValue"}
+Query Param:  size = 8192
+Query Param:  firstkey = firstvalue@123
+HEADER:       Header1 = value1
+HEADER:       Content-Type = application/x-www-form-urlencoded
+HEADER:       Real_ip_header = X-Real-IP
+HEADER:       Connection = close
+HEADER:       Content-Length = 23
+HEADER:       User-Agent = curl/7.47.0
+HEADER:       Accept = */*
+###################################################################
 ```
 
 ## Add it to nginx with mirror module to track the requests to whatever the path you want in real time.
