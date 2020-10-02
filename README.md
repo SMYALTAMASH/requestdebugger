@@ -6,6 +6,12 @@
 docker run -d  -v /tmp:/tmp  -p 1111:5464 --name requestdebugger kingalt/requestdebugger:1.1
 ```
 
+## Try with a linux binary.
+```
+wget https://github.com/SMYALTAMASH/requestdebugger/releases/download/V-1.1/main
+./main
+```
+
 ## What does the too do?
 * A tool to log HTTP request Method, URL, HEADERS, Query Params, Body.
 
