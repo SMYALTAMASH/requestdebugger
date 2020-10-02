@@ -8,8 +8,10 @@ docker run -d  -v /tmp:/tmp  -p 1111:5464 --name requestdebugger kingalt/request
 
 ## Try with a linux binary.
 ```
+# Download the binary
 wget https://github.com/SMYALTAMASH/requestdebugger/releases/download/V-1.1/main
 
+# Run the binary
 ./main
 ```
 
