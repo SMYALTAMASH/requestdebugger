@@ -46,9 +46,9 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
   }
 
   if string(bodyBytes) == "" {
-    final += "CURL COMMAND: \ncurl -X"+r.Method+" '"+r.Host+""+r.URL.Path+""+qparams+""+strings.TrimSuffix(curlheaders, "\\")+"\n\n"
+    final += "\nCURL COMMAND: \ncurl -X"+r.Method+" '"+r.Host+""+r.URL.Path+""+qparams+""+strings.TrimSuffix(curlheaders, "\\")+"\n\n"
   } else {
-    final += "CURL COMMAND: \ncurl -X"+r.Method+" '"+r.Host+""+r.URL.Path+""+qparams+""+curlheaders+"--data-urlencode: '"+string(bodyBytes)+"'\n\n"
+    final += "\nCURL COMMAND: \ncurl -X"+r.Method+" '"+r.Host+""+r.URL.Path+""+qparams+""+curlheaders+"--data-urlencode: '"+string(bodyBytes)+"'\n\n"
   }
 
   final += "###################################################################\n"
