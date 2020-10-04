@@ -25,6 +25,9 @@ docker rm -f requestdebugger
 # Download the binary
 wget https://github.com/SMYALTAMASH/requestdebugger/releases/download/V-1.2/main
 
+# Make the binary executabe
+chmod +x ./main
+
 # Run the binary
 ./main
 ```
