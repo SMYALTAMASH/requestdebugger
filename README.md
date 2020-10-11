@@ -42,10 +42,8 @@ chmod +x requestDebugger-linux-amd64
 
 # build the binary using the below command
 go build -o main requestHeadersQueryParamsAndBody.go
-```
 
-## Run the server
-```
+# Run the server
 ./main # Runs the server
 ```
 
