@@ -1,14 +1,14 @@
 #!/bin/bash
 dockerhubRepo="masteralt/requestdebugger"
 releaseVersion=$(git rev-parse --abbrev-ref HEAD)
-osTypes=( "aix-ppc64" "darwin-amd64" "dragonfly-amd64" "freebsd-386" "freebsd-amd64" "freebsd-arm" "illumos-amd64" "js-wasm" "linux-386" "linux-amd64" "linux-arm" "linux-arm64" "linux-ppc64" "linux-ppc64le" "linux-mips" "linux-mipsle" "linux-mips64" "linux-mips64le" "linux-s390x" "netbsd-386" "netbsd-amd64" "netbsd-arm" "openbsd-386" "openbsd-amd64" "openbsd-arm" "openbsd-arm64" "plan9-386" "plan9-amd64" "plan9-arm" "solaris-amd64" "windows-386" "windows-amd64" )
+osTypes=( "darwin-amd64" "linux-386" "linux-amd64" "linux-arm" "linux-arm64" "windows-386" "windows-amd64" )
 
 releaseDirectory="$(git rev-parse --show-toplevel)/RequestDebuggerBinariesForAllOS/${releaseVersion}"
 
 # Create a zip directory of older version to save space.
-if [ -d ${releaseDirectory} ];
+if [ -d ${releaseDirectory} ] || [ -f "${releaseDirectory}.zip" ];
 then
-  echo "Release Binary directory already exists"
+  echo "Release Binary directory or zip file already exist"
 else
   ls "$(git rev-parse --show-toplevel)/RequestDebuggerBinariesForAllOS/" | grep -v zip | xargs -I % sh -c "zip -r %.zip %; rm -rf %"
   mkdir -p ${releaseDirectory}
