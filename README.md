@@ -1,7 +1,7 @@
 # Request Debugger:-
 ## Helps to debug the HTTP Request Headers, Query Params, Method, URL and Request Body.
 
-## What does the too do?
+## What does the tool do?
 * A tool to log HTTP request Method, URL, HEADERS, Query Params, Body and to geenrate the curl command for easy debugging.
 
 * It writes the request inside /tmp/requestHeadersQueryParamsAndBody.log file.
