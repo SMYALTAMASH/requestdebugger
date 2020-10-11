@@ -24,6 +24,10 @@ do
   chmod +x "${releaseDirectory}/requestDebugger-${os}-${arch}"
 done
 
+# create a zip out of the directory and wipe out the binary files
+zip -r ${releaseDirectory} ${releaseDirectory}
+rm -rf ${releaseDirectory}
+
 # Build docker images and push to docker registry
 echo "Building docker image for the version ${releaseVersion}"
 docker build -t ${dockerhubRepo}:${releaseVersion} $(git rev-parse --show-toplevel)
