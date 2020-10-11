@@ -11,7 +11,7 @@
 ## Try he request debugger using the below docker container:-
 ```
 # To Run a docker container
-docker run -d  -v /tmp:/tmp  -p 1111:5464 --name requestdebugger kingalt/requestdebugger:1.2
+docker run -d  -v /tmp:/tmp  -p 1111:5464 --name requestdebugger masteralt/requestdebugger:version1
 
 # Check the logs after one of the request is fired in our host system using,
 tail -f /tmp/requestHeadersQueryParamsAndBody.log
@@ -20,20 +20,27 @@ tail -f /tmp/requestHeadersQueryParamsAndBody.log
 docker rm -f requestdebugger
 ```
 
-## Try with a linux binary.
+## Try with a prebuilt and ready to use binary.
+#### SUPPORTED OS WITH PREBUILT BINARIES ARE: windows, MAC, Linux.
 ```
-# Download the binary
-wget https://github.com/SMYALTAMASH/requestdebugger/releases/download/V-1.2/main
+# Download the binary from latest release from the folder "RequestDebuggerBinariesForAllOS" from root directory
 
-# Make the binary executabe
-chmod +x ./main
+# unzip the latest release folder
 
-# Run the binary
-./main
+# Choose the binary which matches your OS
+
+# make the binary executable [In my case the OS is ubuntu which is linux amd64]
+chmod +x requestDebugger-linux-amd64
+
+# Run the binary [In my case the OS is ubuntu which is linux amd64]
+./requestDebugger-linux-amd64
 ```
 
 ## Steps to build an executable go binary are:-
 ```
+# clone the repo
+
+# build the binary using the below command
 go build -o main requestHeadersQueryParamsAndBody.go
 ```
 
