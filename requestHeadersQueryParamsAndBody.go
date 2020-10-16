@@ -2,13 +2,15 @@ package main
 
 import (
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"os"
 	"strings"
 	"time"
 )
+
+var log = logrus.New()
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
 	var bodyBytes []byte
@@ -16,6 +18,9 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	var qparams, curlheaders string
 	t := time.Now()
 	timeStamp := t.Format(time.RFC1123)
+
+	defer r.Body.Close()
+
 	final += "###################################################################\n"
 	final += "TIMESTAMP:    " + timeStamp + "\n"
 	final += "HTTP Method:  " + r.Method + "\n"
@@ -49,40 +54,43 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 
 	if string(bodyBytes) == "" {
 		if r.Header.Get("Requestdebugger_url") != "" {
-			final += "\nCURL COMMAND: \ncurl -X" + r.Method + " " + r.Header.Get("Requestdebugger_url") + "" + r.URL.Path + "" + qparams + "" + strings.TrimSuffix(curlheaders, "\\") + "\n\n"
+			final += "\nCURL COMMAND: \ncurl -X" + r.Method + " '" + r.Header.Get("Requestdebugger_url") + "" + r.URL.Path + "" + qparams + "" + strings.TrimSuffix(curlheaders, "\\") + "\n\n"
 		} else {
 			final += "\nCURL COMMAND: \ncurl -X" + r.Method + " '{{host}}" + r.URL.Path + "" + qparams + "" + strings.TrimSuffix(curlheaders, "\\") + "\n\n"
 		}
 	} else {
 		if r.Header.Get("Requestdebugger_url") != "" {
-			final += "\nCURL COMMAND: \ncurl -X" + r.Method + " " + r.Header.Get("Requestdebugger_url") + "" + r.URL.Path + "" + qparams + "" + curlheaders + "--data-urlencode: '" + string(bodyBytes) + "'\n\n"
+			final += "\nCURL COMMAND: \ncurl -X" + r.Method + " '" + r.Header.Get("Requestdebugger_url") + "" + r.URL.Path + "" + qparams + "" + strings.TrimSuffix(curlheaders, "\\") + "-d '" + string(bodyBytes) + "'\n\n"
 		} else {
-			final += "\nCURL COMMAND: \ncurl -X" + r.Method + " '{{host}}" + r.URL.Path + "" + qparams + "" + curlheaders + "--data-urlencode: '" + string(bodyBytes) + "'\n\n"
+			final += "\nCURL COMMAND: \ncurl -X" + r.Method + " '{{host}}" + r.URL.Path + "" + qparams + "" + strings.TrimSuffix(curlheaders, "\\") + "-d '" + string(bodyBytes) + "'\n\n"
 		}
 	}
 
 	final += "###################################################################\n"
+	log.Info(final)
 
-	f, err := os.OpenFile("/tmp/requestHeadersQueryParamsAndBody.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-	if err != nil {
-		log.Fatal(err)
-	}
+	//f, err := os.OpenFile("/tmp/requestHeadersQueryParamsAndBody.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	//if err != nil {
+	//	log.Fatal(err)
+	//}
 
-	if _, err := f.Write([]byte(final)); err != nil {
-		log.Fatal(err)
-	}
+	//if _, err := f.Write([]byte(final)); err != nil {
+	//	log.Fatal(err)
+	//}
 
-	if err := f.Close(); err != nil {
-		log.Fatal(err)
-	}
+	//if err := f.Close(); err != nil {
+	//	log.Fatal(err)
+	//}
 
-	fmt.Fprintf(w, string(bodyBytes))
+	fmt.Fprintf(w, string(bodyBytes)+"\n\n")
 }
 
 func main() {
+	// LOGGING: https://github.com/sirupsen/logrus
+	log.Out = os.Stdout
+	//	log.SetLevel(log.InfoLevel)
 	http.HandleFunc("/", indexHandler)
-
-	fmt.Printf("Starting server at port 5464\n")
+	log.Info("Starting server at port 5464\n")
 	if err := http.ListenAndServe(":5464", nil); err != nil {
 		log.Fatal(err)
 	}
