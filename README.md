@@ -8,7 +8,7 @@
 
 * The container Runs internally on port 5464, expose it to your favourite port.
 
-## Try he request debugger using the below docker container:-
+## Try the request debugger using the below docker container:-
 ```
 # To Run a docker container
 docker run -d  -v /tmp:/tmp  -p 1111:5464 --name requestdebugger masteralt/requestdebugger:version1
