@@ -1,0 +1,2 @@
+# Deprecated — PVC is not used. Exchange logs are written to stdout and to LOG_PATH inside the pod (/tmp by default).
+# This file is kept for reference only; it is not included in kustomization.yaml.

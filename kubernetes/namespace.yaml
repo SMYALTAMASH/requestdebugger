@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: requestdebugger
+  labels:
+    app.kubernetes.io/name: requestdebugger
+    app.kubernetes.io/component: debugger

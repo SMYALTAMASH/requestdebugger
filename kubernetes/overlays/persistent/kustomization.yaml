@@ -1,0 +1,1 @@
+# Deprecated overlay — use kubectl apply -k kubernetes/ instead.

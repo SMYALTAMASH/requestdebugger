@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: requestdebugger
+  namespace: requestdebugger
+  labels:
+    app.kubernetes.io/name: requestdebugger
+  annotations:
+    # Adjust for your ingress controller, e.g. nginx:
+    # nginx.ingress.kubernetes.io/proxy-body-size: "10m"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: requestdebugger.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: requestdebugger
+                port:
+                  number: 5464

@@ -1,0 +1,12 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: requestdebugger
+  namespace: requestdebugger
+  labels:
+    app.kubernetes.io/name: requestdebugger
+spec:
+  minAvailable: 0
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: requestdebugger

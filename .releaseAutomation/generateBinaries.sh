@@ -20,7 +20,7 @@ do
   os=$(echo $osIterator | cut -d "-" -f1)
   arch=$(echo $osIterator | cut -d "-" -f2)
   echo "Building binary for os ${os} and architecture ${arch} and storing it in ${releaseDirectory}/"
-  CGO_ENABLED=0 GOOS=${os} GOARCH=${arch} go build -o "${releaseDirectory}/requestDebugger-${os}-${arch}" $(git rev-parse --show-toplevel)/requestHeadersQueryParamsAndBody.go
+  CGO_ENABLED=0 GOOS=${os} GOARCH=${arch} go build -o "${releaseDirectory}/requestDebugger-${os}-${arch}" $(git rev-parse --show-toplevel)
   chmod +x "${releaseDirectory}/requestDebugger-${os}-${arch}"
 done
 
