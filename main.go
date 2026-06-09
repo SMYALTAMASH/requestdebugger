@@ -27,6 +27,7 @@ const (
 	requestDebuggerURLHeader = "Requestdebugger_url"
 	requestDebuggerURLEnvVar = "REQUESTDEBUGGER_URL"
 	logFormatEnvVar          = "LOG_FORMAT"
+	enableCurlEnvVar         = "ENABLE_CURL"
 )
 
 type logLevel int
@@ -112,6 +113,27 @@ func resolveLogFormat(flagValue, envValue, fallback string) (logFormat, error) {
 		raw = fallback
 	}
 	return parseLogFormat(raw)
+}
+
+func parseBoolEnv(raw string) (bool, bool) {
+	switch strings.ToLower(strings.TrimSpace(raw)) {
+	case "1", "true", "yes", "on":
+		return true, true
+	case "0", "false", "no", "off":
+		return false, true
+	default:
+		return false, false
+	}
+}
+
+func resolveCurlEnabled(flagEnabled bool, envValue string) bool {
+	if flagEnabled {
+		return true
+	}
+	if enabled, ok := parseBoolEnv(envValue); ok {
+		return enabled
+	}
+	return false
 }
 
 type runtimeConfig struct {
@@ -257,7 +279,7 @@ func main() {
 	}
 
 	cfg := &runtimeConfig{
-		curlEnabled: *enableCurl,
+		curlEnabled: resolveCurlEnabled(*enableCurl, os.Getenv(enableCurlEnvVar)),
 		level:       level,
 	}
 

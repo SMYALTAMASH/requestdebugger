@@ -10,4 +10,5 @@ data:
   LOG_PATH: "/tmp/requestHeadersQueryParamsAndBody.log"
   LOG_LEVEL: "debug"
   LOG_FORMAT: "text"
+  ENABLE_CURL: "true"
   REQUESTDEBUGGER_URL: ""
